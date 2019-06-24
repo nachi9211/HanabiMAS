@@ -33,14 +33,11 @@ class Player:
             return ['HINT']
         elif self.check_dead_card(possibility_tables,dead_cards) >= 0:
             return ['DISCARD DEAD CARD', self.check_dead_card(possibility_tables,dead_cards)]
-        #TO DO : CHECK NEXT TWO ELIF STATEMENTS: I've improved them'
         elif self.check_whether_card_known_duplicate(possibility_tables,handstable) !=-1:
             return ['DISCARD DUPLICATE', self.check_whether_card_known_duplicate(possibility_tables,handstable)]
         elif self.check_whether_dispensable_card_known(possibility_tables, possible_cards)!=-1:
             return ['DISCARD DISPENSABLE', self.check_whether_dispensable_card_known(possibility_tables, possible_cards)]
         else:
-            #to do: first card could be indispensible, gets discarded. Add priority to hint?
-            # note sanne: we only go here if there are no hints left
             return['DISCARD FIRST CARD',0]
         return action
 
@@ -122,7 +119,6 @@ class Game:
         self.center = {}
         self.playable_cards = np.zeros((ncolors))
         self.dead_cards = np.zeros((ncolors)) -1
-        # print(self.playable_cards)
         self.discard_pile = []
         self.commondicts = {'center': self.center,
                             'discard_dict': self.discard_pile
@@ -178,9 +174,6 @@ class Game:
                             ncards += self.possible_cards[color,value]
                             if self.playable_cards[color] == value:
                                 nplayable_cards += self.possible_cards[color,value]
-                #to do : check below line 'ncards' for divide by zero error
-                # note sanne: Isn't this impossible? Since it would mean none of the cards are possible
-                # or did it happen?
                 if ncards!=0:
                     cards[card] = nplayable_cards/ncards
 
